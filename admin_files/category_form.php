@@ -1,0 +1,188 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Category CRUD</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
+    <style>
+        /* Ensure modal appears on top of other elements */
+        .modal-backdrop {
+            z-index: 1050 !important;
+            /* Default Bootstrap modal z-index */
+        }
+
+        .modal {
+            z-index: 1051 !important;
+            /* Ensure modal is above backdrop */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <?php
+            include '../admin_files/header.php'
+        ?>
+        <!-- Theme Setting button -->
+        <?php
+            // include '../admin_files/theme_setting.php';
+        ?>
+
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow bg-warning sidebar-text-dark">
+                <?php
+                    include '../admin_files/sidebar_items.php'
+                ?>
+            </div>
+            <div class="app-main__outer">
+                <div class="app-main__inner">
+                    <!-- Area for Title -->
+                    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="fa fa-list text-warning">
+                                    </i>
+                                </div>
+                                <h2>Category</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xl-6 rounded rounded-5">
+                            <div class="card mb-3 ">
+                                <div class="card-header bg-warning text-white">
+                                    <h5>Add New Category</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="../php_files/category_crud.php">
+                                        <div class="form-group">
+                                            <label for="category_name">Category Name</label>
+                                            <input type="text" class="form-control" id="category_name"
+                                                name="category_name" placeholder="Enter category name" required>
+                                        </div>
+                                        <!-- Check below line {name} -->
+                                        <button type="submit" name="create_category"
+                                            class="btn btn-warning btn-block font-weight-bold">Add Category</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-warning text-white">Existing Categories</div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Name</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                include('../php_files/db_connections.php');
+                                                $sql = "SELECT * FROM categories";
+                                                $result = $conn->query($sql);
+
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['category_name'] . "</td>";
+                                                        echo "<td>
+                                                            <button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editCategoryModal'
+                                                                    data-id='" . $row['category_id'] . "' 
+                                                                    data-name='" . $row['category_name'] . "'>
+                                                                    Edit
+                                                            </button>
+                                                            <a href='../php_files/category_crud.php?delete_category=" . $row['category_id'] . "' class='btn btn-danger'>Delete</a>
+                                                        </td>";
+                                                        echo "</tr>";
+                                                    }
+                                                } else {
+                                                    echo "<tr><td colspan='3'>No categories found.</td></tr>";
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area for admin footer -->
+                <div class="app-wrapper-footer">
+                    <div class="app-footer">
+                        <div class="app-footer__inner">
+                            <div class="app-footer-left">
+                                <h6>Global Gatherings</h6>
+                            </div>
+                            <div class="app-footer-right">
+                                <h6>Made with Love</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal -->
+    <!-- Modal for Editing Category -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryModalLabel">Update Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateCategoryForm" method="POST" action="../php_files/category_crud.php">
+                        <input type="hidden" name="category_id" id="category_id">
+                        <div class="form-group">
+                            <label for="category_name" class="col-form-label">Category Name:</label>
+                            <input type="text" class="form-control" name="category_name" id="category_name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="update_category" class="btn btn-warning">Update Category</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-If6qlI93HtSTi5DX7yzLlfKZOnCB6M4X6NHbD5VrAnpW9bq2lXbVZ0kCG6qhfQdW"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <script>
+        // JavaScript to populate modal fields dynamically
+        $('#editCategoryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var category_id = button.data('id'); // Extract info from data-* attributes
+            var category_name = button.data('name');
+
+            var modal = $(this);
+            modal.find('#category_id').val(category_id); // Populate hidden field with category ID
+            modal.find('#category_name').val(category_name); // Populate input with category name
+        });
+    </script>
+</body>
+
+</html>
