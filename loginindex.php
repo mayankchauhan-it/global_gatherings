@@ -31,7 +31,7 @@
             right: 10px;
             cursor: pointer;
             user-select: none;
-        }
+        }`
     </style>
 </head>
 

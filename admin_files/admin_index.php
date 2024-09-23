@@ -20,7 +20,7 @@
         ?>
         <!-- Theme Setting button -->
         <?php
-            // include '../admin_files/theme_setting.php';
+            // include '../admin_files/theme_setting.php';2
         ?>
 
         <div class="app-main">
