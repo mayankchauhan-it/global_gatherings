@@ -129,7 +129,7 @@ https://www.tooplate.com/view/2125-artxibition
                         </div>
                         <div class="total">
                             <h4>Total: $210.00</h4>
-                            <div class="main-dark-button"><a href="#">Purchase Tickets</a></div>
+                            <div class="main-dark-button"><a href="tickets_FORMS.php">Purchase Tickets</a></div>
                         </div>
                         <div class="warn">
                             <p>You Can Only Buy 10 Tickets For This Show</p>
