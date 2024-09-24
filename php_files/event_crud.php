@@ -3,12 +3,13 @@ include('db_connections.php');
 
 // Create Event
 if (isset($_POST['create_event'])) {
+    $event_id = $_POST['event_id'];
     $event_name = $_POST['event_name'];
     $event_date = $_POST['event_date'];
     $event_description = $_POST['event_description'];
 
     $sql = "INSERT INTO events (event_name, event_date, event_description) 
-            VALUES ('$event_name', '$event_date', '$event_description')";
+            VALUES ('$event_id','$event_name', '$event_date', '$event_description')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New event created successfully!";

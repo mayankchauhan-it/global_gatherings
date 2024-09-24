@@ -74,7 +74,7 @@ CREATE TABLE `events` (
   `event_date` date NOT NULL,
   `event_time` time DEFAULT NULL,
   `venue` varchar(100) DEFAULT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -172,6 +172,64 @@ https://www.tooplate.com/view/2125-artxibition
                                         </div>
                                         <div class="col-lg-9">
                                             <div class="row">
+
+                                                <!--Fetch Query to dynamically get the events -->
+                                                <!--Fetch Query to dynamically get the events -->
+<?php 
+include('../php_files/db_connections.php');
+
+// Fetch events from the database
+$sql = "SELECT * FROM events";
+$result = $conn->query($sql);
+?>
+
+<?php
+// Check if there are any events in the result
+if ($result->num_rows > 0) {
+    // Loop through each event and create the necessary HTML structure
+    while ($row = $result->fetch_assoc()) {
+        echo '<div class="col-lg-12">
+                <div class="event-item">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="left-content">
+                                <h4>' . $row['event_name'] . '</h4>
+                                <p>' . $row['event_description'] . '</p>
+                                <div class="main-dark-button"><a href="event-details.php?id=' . $row['id'] . '">Discover More</a></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="thumb">
+                                <img src="' . $row['image_url'] . '" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="right-content">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-clock-o"></i>
+                                        <h6>' . $row['event_date'] . '<br>' . $row['event_time'] . '</h6>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-map-marker"></i>
+                                        <span><p>' . $row['event_location'] . '</p></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+    }
+} else {
+    echo "No events found.";
+}
+?>
+
+
+
+
+
                                                 <div class="col-lg-12">
                                                     <div class="event-item">
                                                         <div class="row">
@@ -208,6 +266,7 @@ https://www.tooplate.com/view/2125-artxibition
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="event-item">
                                                         <div class="row">
@@ -244,6 +303,7 @@ https://www.tooplate.com/view/2125-artxibition
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="event-item">
                                                         <div class="row">
@@ -280,6 +340,7 @@ https://www.tooplate.com/view/2125-artxibition
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-12">
                                                     <div class="event-item">
                                                         <div class="row">

@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-                <a href="events.php" class="<?php echo ($current_page == 'events.php') ? 'mm-active' : ''; ?>">
+                <a href="event_forms.php" class="<?php echo ($current_page == 'events.php') ? 'mm-active' : ''; ?>">
                     <i class="metismenu-icon pe-7s-check"></i>
                     Events
                 </a>
